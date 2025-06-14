@@ -16,7 +16,7 @@ No coding required - just a simple web interface to handle the OAuth flow.
 
 **Run the container:**
 ```bash
-docker run -p 8080:5000 your-dockerhub-username/tumblr-oauth-generator
+docker run -p 8080:5000 ghcr.io/jtenniswood/tumblr-oauth:latest
 ```
 
 **Or run with Docker Compose:**
@@ -60,7 +60,7 @@ You need a Consumer Key and Consumer Secret from Tumblr first:
 → Make sure you used exactly `http://localhost:8080/oauth/callback` in your Tumblr app settings
 
 **"Port already in use"**  
-→ Use a different port: `docker run -p 9090:5000 your-dockerhub-username/tumblr-oauth-generator`  
+→ Use a different port: `docker run -p 9090:5000 ghcr.io/jtenniswood/tumblr-oauth:latest`  
 → Then open http://localhost:9090
 
 ## Security Note
