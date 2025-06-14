@@ -1,0 +1,146 @@
+{% extends "base.html" %}
+
+{% block title %}OAuth Tokens - Tumblr OAuth Token Generator{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8 max-w-2xl">
+    <!-- Success Header -->
+    <div class="text-center mb-8">
+        <div class="flex justify-center mb-4">
+            <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-green-500/20 border border-green-500/30">
+                <i class="fas fa-check text-2xl text-green-400"></i>
+            </div>
+        </div>
+        <h1 class="text-3xl font-bold text-foreground mb-2">Tokens Generated Successfully</h1>
+        <p class="text-muted-foreground">
+            Your OAuth tokens for <span class="font-semibold text-green-400">{{ user_info.name if user_info and user_info.name else 'your account' }}</span> are ready to use
+        </p>
+    </div>
+
+    <!-- Tokens Card -->
+    <div class="rounded-lg border bg-card text-card-foreground shadow-lg mb-6">
+        <!-- Card Header -->
+        <div class="flex flex-col space-y-1.5 p-6 pb-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                    <div class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-primary/10">
+                        <i class="fas fa-key text-primary text-sm"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold leading-none tracking-tight">OAuth Credentials</h3>
+                </div>
+                <div class="flex items-center space-x-1 text-xs text-green-400 bg-green-400/10 px-2 py-1 rounded-full">
+                    <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                    <span>Active</span>
+                </div>
+            </div>
+            <p class="text-sm text-muted-foreground">Copy these tokens to authenticate API requests</p>
+        </div>
+        
+        <!-- Card Content -->
+        <div class="p-6 pt-0 space-y-4">
+            <!-- OAuth Token -->
+            <div class="space-y-2">
+                <label class="text-sm font-medium text-foreground flex items-center">
+                    <i class="fas fa-key text-xs mr-2 text-muted-foreground"></i>
+                    OAuth Token
+                </label>
+                <div class="flex">
+                    <input 
+                        type="text" 
+                        id="oauth-token"
+                        value="{{ session.access_token if session.access_token else 'Not available' }}"
+                        readonly
+                        class="flex h-10 w-full rounded-l-md border border-r-0 border-input bg-muted/50 px-3 py-2 text-sm font-mono text-foreground ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                    >
+                    <button 
+                        type="button"
+                        onclick="copyToClipboard('oauth-token')"
+                        class="inline-flex items-center justify-center whitespace-nowrap rounded-r-md text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 border border-l-0 border-input"
+                    >
+                        <i class="fas fa-copy text-xs mr-1"></i>
+                        Copy
+                    </button>
+                </div>
+            </div>
+            
+            <!-- OAuth Token Secret -->
+            <div class="space-y-2">
+                <label class="text-sm font-medium text-foreground flex items-center">
+                    <i class="fas fa-lock text-xs mr-2 text-muted-foreground"></i>
+                    OAuth Token Secret
+                </label>
+                <div class="flex">
+                    <input 
+                        type="text" 
+                        id="oauth-secret"
+                        value="{{ session.access_token_secret if session.access_token_secret else 'Not available' }}"
+                        readonly
+                        class="flex h-10 w-full rounded-l-md border border-r-0 border-input bg-muted/50 px-3 py-2 text-sm font-mono text-foreground ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                    >
+                    <button 
+                        type="button"
+                        onclick="copyToClipboard('oauth-secret')"
+                        class="inline-flex items-center justify-center whitespace-nowrap rounded-r-md text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 border border-l-0 border-input"
+                    >
+                        <i class="fas fa-copy text-xs mr-1"></i>
+                        Copy
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    
+    <!-- Security Note -->
+    <div class="text-center mt-8">
+        <p class="text-xs text-muted-foreground">
+            <i class="fas fa-shield-alt mr-1"></i>
+            Keep your tokens secure • Never share them publicly
+        </p>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+function copyToClipboard(elementId) {
+    const element = document.getElementById(elementId);
+    const button = element.nextElementSibling;
+    
+    // Create a temporary textarea to handle the copy
+    const tempTextarea = document.createElement('textarea');
+    tempTextarea.value = element.value;
+    document.body.appendChild(tempTextarea);
+    tempTextarea.select();
+    tempTextarea.setSelectionRange(0, 99999);
+    
+    try {
+        document.execCommand('copy');
+        
+        // Visual feedback
+        const originalHTML = button.innerHTML;
+        button.innerHTML = '<i class="fas fa-check text-xs mr-1"></i>Copied!';
+        button.classList.remove('bg-primary', 'hover:bg-primary/90');
+        button.classList.add('bg-green-600', 'hover:bg-green-700');
+        
+        setTimeout(() => {
+            button.innerHTML = originalHTML;
+            button.classList.remove('bg-green-600', 'hover:bg-green-700');
+            button.classList.add('bg-primary', 'hover:bg-primary/90');
+        }, 2000);
+        
+    } catch (err) {
+        console.error('Failed to copy: ', err);
+        // Fallback notification
+        const notification = document.createElement('div');
+        notification.className = 'fixed top-4 right-4 bg-red-900/90 text-red-200 px-4 py-2 rounded-lg shadow-lg z-50';
+        notification.textContent = 'Failed to copy to clipboard';
+        document.body.appendChild(notification);
+        setTimeout(() => notification.remove(), 3000);
+    } finally {
+        document.body.removeChild(tempTextarea);
+    }
+}
+</script>
+{% endblock %} 

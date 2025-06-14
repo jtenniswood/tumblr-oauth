@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!-- Main Form -->
+<div class="container mx-auto px-4 py-8 max-w-md">
+    <div class="rounded-lg border bg-card text-card-foreground shadow-lg">
+        <!-- Card Header -->
+        <div class="flex flex-col space-y-1.5 p-6 pb-4">
+            <div class="flex items-center space-x-2">
+                <div class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-primary/10">
+                    <i class="fas fa-key text-primary text-sm"></i>
+                </div>
+                <h3 class="text-2xl font-semibold leading-none tracking-tight">API Credentials</h3>
+            </div>
+            <p class="text-sm text-muted-foreground">Enter your Tumblr API credentials to generate OAuth tokens</p>
+        </div>
+        
+        <!-- Card Content -->
+        <div class="p-6 pt-0">
+            <!-- Info Alert -->
+            <div class="flex items-start space-x-3 p-4 mb-6 rounded-lg border border-blue-800/50 bg-blue-900/20">
+                <div class="flex-shrink-0">
+                    <i class="fas fa-info-circle text-blue-400 text-sm mt-0.5"></i>
+                </div>
+                <div class="flex-1 text-sm">
+                    <p class="text-blue-200 font-medium mb-1">Setup your API app</p>
+                    <p class="text-blue-300/80 mb-2">Get them from 
+                        <a href="https://www.tumblr.com/oauth/apps" target="_blank" 
+                           class="underline hover:text-blue-200 transition-colors font-medium">
+                            Tumblr's Developer Portal
+                        </a>
+                    </p>
+                    <code class="text-xs bg-blue-900/40 px-2 py-1 rounded text-blue-200">
+                        Callback URL: http://localhost:8080/oauth/callback
+                    </code>
+                </div>
+            </div>
+            
+            <!-- Form -->
+            <form method="POST" action="/oauth/start" class="space-y-6">
+                <!-- Consumer Key Input -->
+                <div class="space-y-2">
+                    <label for="consumer_key" class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                        Consumer Key
+                    </label>
+                    <div class="relative">
+                        <input 
+                            type="text" 
+                            id="consumer_key" 
+                            name="consumer_key"
+                            class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-colors"
+                            placeholder="Enter your Tumblr Consumer Key"
+                            required
+                        >
+                        <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                            <i class="fas fa-key text-muted-foreground text-xs"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Consumer Secret Input -->
+                <div class="space-y-2">
+                    <label for="consumer_secret" class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                        Consumer Secret
+                    </label>
+                    <div class="relative">
+                        <input 
+                            type="password" 
+                            id="consumer_secret" 
+                            name="consumer_secret"
+                            class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 transition-colors"
+                            placeholder="Enter your Tumblr Consumer Secret"
+                            required
+                        >
+                        <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                            <i class="fas fa-lock text-muted-foreground text-xs"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Submit Button -->
+                <button 
+                    type="submit"
+                    class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 tumblr-gradient hover:opacity-90 text-white h-10 px-4 py-2 w-full group"
+                >
+                    <i class="fas fa-arrow-right mr-2 text-sm group-hover:translate-x-1 transition-transform duration-200"></i>
+                    Generate OAuth Tokens
+                </button>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Footer Note -->
+    <div class="text-center mt-8">
+        <p class="text-xs text-muted-foreground">
+            Secure OAuth 1.0a authentication • No data stored
+        </p>
+    </div>
+</div>
+{% endblock %} 
