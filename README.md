@@ -19,14 +19,21 @@ No coding required - just a simple web interface to handle the OAuth flow.
 docker run -p 8080:5000 ghcr.io/jtenniswood/tumblr-oauth:latest
 ```
 
+You'll see a friendly startup message telling you exactly where to access the app:
+```
+============================================================
+🚀 Tumblr OAuth Token Generator
+============================================================
+✅ Server starting...
+🌐 Access the app at: http://localhost:8080
+📝 Need help? Check: https://github.com/jtenniswood/tumblr-oauth
+============================================================
+```
+
 **Or run with Docker Compose:**
 ```bash
 cd docker && docker-compose up --build
 ```
-
-**Open in your browser:** http://localhost:8080
-
-That's it! The app is now running.
 
 > 💡 **Optimized for Size**: This container uses Alpine Linux and multi-stage builds for a minimal footprint (~110MB vs 542MB standard Python images).
 

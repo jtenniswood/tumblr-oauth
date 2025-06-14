@@ -118,4 +118,14 @@ def logout():
     return redirect('/')
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True) 
+    print("=" * 60)
+    print("🚀 Tumblr OAuth Token Generator")
+    print("=" * 60)
+    print("✅ Server starting...")
+    print("🌐 Access the app at: http://localhost:8080")
+    print("📝 Need help? Check: https://github.com/jtenniswood/tumblr-oauth")
+    print("=" * 60)
+    
+    # Use debug mode only in development
+    debug_mode = os.environ.get('FLASK_ENV') == 'development'
+    app.run(host='0.0.0.0', port=5000, debug=debug_mode) 
