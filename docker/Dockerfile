@@ -1,35 +1,55 @@
-# Use Python 3.11 slim image as base
-FROM python:3.11-slim
+# Build stage
+FROM python:3.11-alpine AS builder
+
+# Install build dependencies
+RUN apk add --no-cache \
+    gcc \
+    musl-dev \
+    libffi-dev
 
 # Set working directory
 WORKDIR /app
 
-# Install system dependencies
-RUN apt-get update && apt-get install -y \
-    gcc \
-    curl \
-    && rm -rf /var/lib/apt/lists/*
-
-# Copy requirements first to leverage Docker cache
+# Copy and install Python dependencies
 COPY requirements.txt .
+RUN pip install --no-cache-dir --user -r requirements.txt
 
-# Install Python dependencies
-RUN pip install --no-cache-dir -r requirements.txt
+# Production stage
+FROM python:3.11-alpine AS production
 
-# Copy application code
-COPY . .
+# Install runtime dependencies only
+RUN apk add --no-cache curl && \
+    rm -rf /var/cache/apk/*
 
-# Create a non-root user
-RUN useradd -m -u 1000 flaskuser && chown -R flaskuser:flaskuser /app
+# Create non-root user
+RUN adduser -D -u 1000 flaskuser
+
+# Set working directory
+WORKDIR /app
+
+# Copy Python packages from builder stage
+COPY --from=builder /root/.local /home/flaskuser/.local
+
+# Copy only necessary application files
+COPY app.py .
+COPY requirements.txt .
+COPY templates/ templates/
+
+# Set ownership and switch to non-root user
+RUN chown -R flaskuser:flaskuser /app
 USER flaskuser
 
-# Expose port
-EXPOSE 5000
+# Add local packages to PATH
+ENV PATH=/home/flaskuser/.local/bin:$PATH
+ENV PYTHONPATH=/home/flaskuser/.local/lib/python3.11/site-packages
 
 # Set environment variables
 ENV FLASK_APP=app.py
 ENV FLASK_ENV=production
 ENV PYTHONUNBUFFERED=1
+
+# Expose port
+EXPOSE 5000
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \

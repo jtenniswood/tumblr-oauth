@@ -28,6 +28,8 @@ cd docker && docker-compose up --build
 
 That's it! The app is now running.
 
+> 💡 **Optimized for Size**: This container uses Alpine Linux and multi-stage builds for a minimal footprint (~110MB vs 542MB standard Python images).
+
 ## Before You Start: Get Tumblr API Credentials
 
 You need a Consumer Key and Consumer Secret from Tumblr first:

@@ -1,15 +1,30 @@
-# Git
+# Version control
 .git
 .gitignore
-README.md
+.gitattributes
 
-# Python
+# Documentation
+README.md
+*.md
+docs/
+
+# Docker files themselves
+docker/
+Dockerfile*
+docker-compose*
+.dockerignore
+
+# Python cache and virtual environments
 __pycache__
 *.pyc
 *.pyo
 *.pyd
 .Python
-env
+env/
+venv/
+.venv/
+ENV/
+.env
 pip-log.txt
 pip-delete-this-directory.txt
 .tox
@@ -20,12 +35,11 @@ nosetests.xml
 coverage.xml
 *.cover
 *.log
-.git
 .mypy_cache
 .pytest_cache
 .hypothesis
 
-# OS
+# OS generated files
 .DS_Store
 .DS_Store?
 ._*
@@ -34,19 +48,49 @@ coverage.xml
 ehthumbs.db
 Thumbs.db
 
-# IDEs
-.vscode
-.idea
+# IDEs and editors
+.vscode/
+.idea/
 *.swp
 *.swo
 *~
+.vim
 
-# Project specific
+# Build artifacts
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Logs and data
 logs/
+*.log
 *.sqlite
 *.db
+data/
 
-# Development
+# Development tools
 .envrc
-.env
-docker-compose.override.yml 
+run.sh
+*.sh
+
+# GitHub files
+.github/
+
+# Node.js (if any)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.temp
+
+# Large files that shouldn't be in containers
+*.iso
+*.dmg
+*.zip
+*.tar.gz 
