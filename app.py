@@ -122,7 +122,7 @@ if __name__ == '__main__':
     print("🚀 Tumblr OAuth Token Generator")
     print("=" * 60)
     print("✅ Server starting...")
-    print("🌐 Access the app at: http://localhost:8080")
+    print("🌐 Access the app at: http://localhost:5000")
     print("📝 Need help? Check: https://github.com/jtenniswood/tumblr-oauth")
     print("=" * 60)
     
