@@ -1,6 +1,6 @@
 # Tumblr OAuth Token Generator
 
-**Generate OAuth tokens for the Tumblr API in 3 simple steps.**
+**Generate OAuth tokens for the Tumblr API**
 
 ## What This Does
 
@@ -11,31 +11,6 @@ This web app helps you get OAuth tokens for the Tumblr API:
 3. **Copy your OAuth tokens** (ready to use in your API calls)
 
 No coding required - just a simple web interface to handle the OAuth flow.
-
-## Quick Start
-
-**Run the container:**
-```bash
-docker run -p 8080:5000 ghcr.io/jtenniswood/tumblr-oauth:latest
-```
-
-You'll see a friendly startup message telling you exactly where to access the app:
-```
-============================================================
-🚀 Tumblr OAuth Token Generator
-============================================================
-✅ Server starting...
-🌐 Access the app at: http://localhost:8080
-📝 Need help? Check: https://github.com/jtenniswood/tumblr-oauth
-============================================================
-```
-
-**Or run with Docker Compose:**
-```bash
-cd docker && docker-compose up --build
-```
-
-> 💡 **Optimized for Size**: This container uses Alpine Linux and multi-stage builds for a minimal footprint (~110MB vs 542MB standard Python images).
 
 ## Before You Start: Get Tumblr API Credentials
 
@@ -53,7 +28,10 @@ You need a Consumer Key and Consumer Secret from Tumblr first:
 
 ## How to Use the App
 
-1. **Start the container** (see Quick Start above)
+1. **Start the container** 
+```bash
+docker run -p 8080:5000 ghcr.io/jtenniswood/tumblr-oauth:latest
+```
 2. **Open** http://localhost:8080 in your browser
 3. **Enter** your Consumer Key and Consumer Secret
 4. **Click** "Generate OAuth Tokens"
