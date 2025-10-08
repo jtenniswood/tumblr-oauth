@@ -1,5 +1,5 @@
 # Build stage
-FROM python:3.13-alpine AS builder
+FROM python:3.14-alpine AS builder
 
 # Install build dependencies
 RUN apk add --no-cache \
@@ -15,7 +15,7 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir --user -r requirements.txt
 
 # Production stage
-FROM python:3.13-alpine AS production
+FROM python:3.14-alpine AS production
 
 # Install runtime dependencies only
 RUN apk add --no-cache curl && \
